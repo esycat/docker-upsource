@@ -20,7 +20,6 @@ WORKDIR $UPSOURCE_PREFIX
 RUN unzip $UPSOURCE_DISTFILE
 RUN rm $UPSOURCE_DISTFILE
 RUN mv Upsource upsource
-RUN mkdir $UPSOURCE_HOME
 
 RUN $UPSOURCE_BIN configure \
     --data-dir $UPSOURCE_HOME/data \
