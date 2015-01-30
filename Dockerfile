@@ -8,15 +8,16 @@ ENV UPSOURCE_HOME /var/lib/upsource
 ENV UPSOURCE_PREFIX /opt
 ENV UPSOURCE_BIN $UPSOURCE_PREFIX/upsource/bin/upsource.sh
 ENV UPSOURCE_URL https://upsource.redlounge.io
+ENV UPSOURCE_PORT 80
 
 VOLUME ["$UPSOURCE_HOME"]
-ENTRYPOINT ["$UPSOURCE_BIN"]
+EXPOSE $UPSOURCE_PORT
+ENTRYPOINT ["/opt/upsource/bin/upsource.sh"]
 CMD ["run"]
-EXPOSE 80
 
+WORKDIR $UPSOURCE_PREFIX
 # ADD https://download.jetbrains.com/upsource/$UPSOURCE_DISTFILE $UPSOURCE_PREFIX/
 COPY $UPSOURCE_DISTFILE $UPSOURCE_PREFIX/
-WORKDIR $UPSOURCE_PREFIX
 RUN unzip $UPSOURCE_DISTFILE
 RUN rm $UPSOURCE_DISTFILE
 RUN mv Upsource upsource
@@ -25,5 +26,6 @@ RUN $UPSOURCE_BIN configure \
     --data-dir $UPSOURCE_HOME/data \
     --logs-dir $UPSOURCE_HOME/log \
     --temp-dir $UPSOURCE_HOME/tmp \
-    --base-url $UPSOURCE_URL
+    --base-url $UPSOURCE_URL \
+    --listen-port $UPSOURCE_PORT
 
