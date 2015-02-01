@@ -7,7 +7,6 @@ ENV UPSOURCE_DISTFILE upsource-${UPSOURCE_VERSION}.zip
 ENV UPSOURCE_HOME /var/lib/upsource
 ENV UPSOURCE_PREFIX /opt
 ENV UPSOURCE_BIN $UPSOURCE_PREFIX/upsource/bin/upsource.sh
-ENV UPSOURCE_URL https://upsource.redlounge.io
 ENV UPSOURCE_PORT 80
 
 VOLUME ["$UPSOURCE_HOME"]
@@ -26,6 +25,5 @@ RUN $UPSOURCE_BIN configure \
     --data-dir $UPSOURCE_HOME/data \
     --logs-dir $UPSOURCE_HOME/log \
     --temp-dir $UPSOURCE_HOME/tmp \
-    --base-url $UPSOURCE_URL \
     --listen-port $UPSOURCE_PORT
 
