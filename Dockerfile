@@ -16,8 +16,8 @@ ENTRYPOINT ["/opt/upsource/bin/upsource.sh"]
 CMD ["run"]
 
 WORKDIR $UPSOURCE_PREFIX
-# ADD https://download.jetbrains.com/upsource/$UPSOURCE_DISTFILE $UPSOURCE_PREFIX/
-COPY $UPSOURCE_DISTFILE $UPSOURCE_PREFIX/
+ADD https://download.jetbrains.com/upsource/$UPSOURCE_DISTFILE $UPSOURCE_PREFIX/
+# COPY $UPSOURCE_DISTFILE $UPSOURCE_PREFIX/ # for local testing only
 RUN unzip $UPSOURCE_DISTFILE
 RUN rm $UPSOURCE_DISTFILE
 RUN mv Upsource upsource
