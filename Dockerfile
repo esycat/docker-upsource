@@ -11,8 +11,6 @@ ENV UPSOURCE_PORT 80
 
 VOLUME ["$UPSOURCE_HOME"]
 EXPOSE $UPSOURCE_PORT
-ENTRYPOINT ["/opt/upsource/bin/upsource.sh"]
-CMD ["run"]
 
 WORKDIR $UPSOURCE_PREFIX
 ADD https://download.jetbrains.com/upsource/$UPSOURCE_DISTFILE $UPSOURCE_PREFIX/
@@ -27,3 +25,5 @@ RUN $UPSOURCE_BIN configure \
     --temp-dir $UPSOURCE_HOME/tmp \
     --listen-port $UPSOURCE_PORT
 
+ENTRYPOINT ["bin/upsource.sh"]
+CMD ["run"]
