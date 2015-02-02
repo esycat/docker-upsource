@@ -19,6 +19,12 @@ RUN unzip $UPSOURCE_DISTFILE
 RUN rm $UPSOURCE_DISTFILE
 RUN mv Upsource upsource
 
+RUN groupadd -r upsource
+RUN useradd -r -g upsource -d $UPSOURCE_HOME upsource
+RUN chown -R upsource:upsource $UPSOURCE_DIR $UPSOURCE_HOME
+
+# USER upsource
+
 RUN $UPSOURCE_BIN configure \
     --data-dir $UPSOURCE_HOME/data \
     --logs-dir $UPSOURCE_HOME/log \
