@@ -1,10 +1,10 @@
 #!/bin/sh
 
 REPO="esycat/upsource"
-TAG="1.0"
+TAG="1.0.1"
 
 NAME="upsource"
-PORTS="80:80"
+PORTS="80:8080"
 VOLUMES=""
 
 docker create --name $NAME -p $PORTS $REPO:$TAG || exit $?
