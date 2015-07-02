@@ -2,7 +2,7 @@ FROM esycat/java:oracle-8
 
 MAINTAINER "Eugene Janusov" <esycat@gmail.com>
 
-ENV UPSOURCE_BUILD 2.0.3462
+ENV UPSOURCE_BUILD 2.0.3554
 ENV UPSOURCE_PORT 8080
 ENV UPSOURCE_USER upsource
 ENV UPSOURCE_SUFFIX upsource
