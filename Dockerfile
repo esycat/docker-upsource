@@ -2,40 +2,41 @@ FROM esycat/java:oracle-8
 
 MAINTAINER "Eugene Janusov" <esycat@gmail.com>
 
-ENV UPSOURCE_BUILD 2.0.3653
-ENV UPSOURCE_PORT 8080
-ENV UPSOURCE_USER upsource
-ENV UPSOURCE_SUFFIX upsource
+ENV APP_VERSION 2.0
+ENV APP_BUILD ${APP_VERSION}.3653
+ENV APP_PORT 8080
+ENV APP_USER upsource
+ENV APP_SUFFIX upsource
 
-ENV UPSOURCE_DISTFILE upsource-${UPSOURCE_BUILD}.zip
-ENV UPSOURCE_PREFIX /opt
-ENV UPSOURCE_DIR $UPSOURCE_PREFIX/$UPSOURCE_SUFFIX
-ENV UPSOURCE_HOME /var/lib/$UPSOURCE_SUFFIX
+ENV APP_DISTFILE upsource-${APP_BUILD}.zip
+ENV APP_PREFIX /opt
+ENV APP_DIR $APP_PREFIX/$APP_SUFFIX
+ENV APP_HOME /var/lib/$APP_SUFFIX
 
-WORKDIR $UPSOURCE_PREFIX
-ADD https://download.jetbrains.com/upsource/$UPSOURCE_DISTFILE $UPSOURCE_PREFIX/
-# COPY $UPSOURCE_DISTFILE $UPSOURCE_PREFIX/
-RUN unzip $UPSOURCE_DISTFILE
-RUN rm $UPSOURCE_DISTFILE
-RUN mv Upsource $UPSOURCE_SUFFIX
+WORKDIR $APP_PREFIX
+ADD https://download.jetbrains.com/upsource/$APP_DISTFILE $APP_PREFIX/
+# COPY $APP_DISTFILE $APP_PREFIX/
+RUN unzip $APP_DISTFILE
+RUN rm $APP_DISTFILE
+RUN mv Upsource $APP_SUFFIX
 
-RUN mkdir $UPSOURCE_HOME
-RUN groupadd -r $UPSOURCE_USER
-RUN useradd -r -g $UPSOURCE_USER -d $UPSOURCE_HOME $UPSOURCE_USER
-RUN chown -R $UPSOURCE_USER:$UPSOURCE_USER $UPSOURCE_HOME $UPSOURCE_DIR
+RUN mkdir $APP_HOME
+RUN groupadd -r $APP_USER
+RUN useradd -r -g $APP_USER -d $APP_HOME $APP_USER
+RUN chown -R $APP_USER:$APP_USER $APP_HOME $APP_DIR
 
-USER $UPSOURCE_USER
+USER $APP_USER
+WORKDIR $APP_DIR
 
-WORKDIR $UPSOURCE_DIR
 RUN bin/upsource.sh configure \
-    --backups-dir $UPSOURCE_HOME/backups \
-    --data-dir    $UPSOURCE_HOME/data \
-    --logs-dir    $UPSOURCE_HOME/log \
-    --temp-dir    $UPSOURCE_HOME/tmp \
-    --listen-port $UPSOURCE_PORT \
+    --backups-dir $APP_HOME/backups \
+    --data-dir    $APP_HOME/data \
+    --logs-dir    $APP_HOME/log \
+    --temp-dir    $APP_HOME/tmp \
+    --listen-port $APP_PORT \
     --base-url    http://localhost/
 
 ENTRYPOINT ["bin/upsource.sh"]
 CMD ["run"]
-EXPOSE $UPSOURCE_PORT
-VOLUME ["$UPSOURCE_HOME"]
+EXPOSE $APP_PORT
+VOLUME ["$APP_HOME"]
