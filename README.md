@@ -12,6 +12,6 @@ Pull the image, create a new container and start it:
 
 ```bash
 docker pull esycat/upsource
-docker create --name upsource -p 8080:8080 esycat/upsource
+docker create --name upsource -p 8080:8080 --restart=always esycat/upsource
 docker start upsource
 ```

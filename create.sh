@@ -7,7 +7,7 @@ NAME="upsource"
 PORTS="80:8080"
 VOLUMES=""
 
-docker create --name $NAME -p $PORTS $REPO:$TAG || exit $?
+docker create --name $NAME -p $PORTS $REPO:$TAG --restart=always || exit $?
 
 echo $NAME container is ready.
 echo To start: docker start $NAME
