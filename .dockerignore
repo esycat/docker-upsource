@@ -1,0 +1,6 @@
+.git*
+nginx
+build.sh
+create.sh
+LICENSE*
+README*

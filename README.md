@@ -1,4 +1,5 @@
 # Upsource
+[![](https://badge.imagelayers.io/esycat/upsource:latest.svg)](https://imagelayers.io/?images=esycat/upsource:latest 'Get your own badge on imagelayers.io')
 
 [Upsource](https://jetbrains.com/upsource/) is a repository browsing and code review tool from [JetBrains](https://jetbrains.com/).
 
