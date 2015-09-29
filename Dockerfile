@@ -13,22 +13,20 @@ ENV APP_PREFIX /opt
 ENV APP_DIR $APP_PREFIX/$APP_SUFFIX
 ENV APP_HOME /var/lib/$APP_SUFFIX
 
-# downloading and unpacking the distribution
-WORKDIR $APP_PREFIX
-ADD https://download.jetbrains.com/upsource/$APP_DISTFILE $APP_PREFIX/
-# COPY $APP_DISTFILE $APP_PREFIX/
-RUN unzip $APP_DISTFILE
-RUN rm $APP_DISTFILE
-RUN mv Upsource $APP_SUFFIX
-
-# removing bundled JVMs
-RUN rm -rf $APP_DIR/internal/java
-
 # preparing home (data) directory and user+group
 RUN mkdir $APP_HOME
 RUN groupadd -r $APP_USER
 RUN useradd -r -g $APP_USER -d $APP_HOME $APP_USER
-RUN chown -R $APP_USER:$APP_USER $APP_HOME $APP_DIR
+RUN chown -R $APP_USER:$APP_USER $APP_HOME
+
+# downloading and unpacking the distribution, removing bundled JVMs
+WORKDIR $APP_PREFIX
+RUN wget -q https://download.jetbrains.com/upsource/$APP_DISTFILE && \
+    unzip -q $APP_DISTFILE && \
+    rm $APP_DISTFILE && \
+    rm -rf $APP_DIR/internal/java && \
+    mv Upsource $APP_SUFFIX && \
+    chown -R $APP_USER:$APP_USER $APP_DIR
 
 USER $APP_USER
 WORKDIR $APP_DIR
