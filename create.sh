@@ -1,7 +1,7 @@
 #!/bin/sh
 
 REPO="esycat/upsource"
-TAG="2.0.3"
+TAG="2.5"
 
 NAME="upsource"
 PORTS="80:8080"
