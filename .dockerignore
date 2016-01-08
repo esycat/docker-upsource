@@ -1,6 +1,6 @@
 .git*
-nginx
+etc
 build.sh
-create.sh
 LICENSE*
 README*
+
