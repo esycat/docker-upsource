@@ -9,3 +9,7 @@ upsource:
         - /etc/localtime:/etc/localtime:ro
         - /data/upsource:/var/lib/upsource
         - /data/upsource/conf:/opt/upsource/conf
+    ulimits:
+        memlock: -1
+        nofile: 100000
+        nproc: 32768
