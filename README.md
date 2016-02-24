@@ -3,7 +3,7 @@
 
 [Upsource](https://jetbrains.com/upsource/) is a repository browsing and code review tool from [JetBrains](https://jetbrains.com/).
 
-Version `2.5.2`, build `5047` (released January 19, 2016).
+Version `2.5.2`, build `5074` (released February 15, 2016).
 
 The image based on [Ubuntu 14.04 LTS](https://registry.hub.docker.com/u/esycat/java/) with [Oracle Java 8](https://registry.hub.docker.com/u/esycat/java/).
 

@@ -3,7 +3,7 @@ FROM esycat/java:oracle-8
 MAINTAINER "Eugene Janusov" <esycat@gmail.com>
 
 ENV APP_VERSION 2.5
-ENV APP_BUILD ${APP_VERSION}.5047
+ENV APP_BUILD ${APP_VERSION}.5074
 ENV APP_PORT 8080
 ENV APP_USER upsource
 ENV APP_SUFFIX upsource
