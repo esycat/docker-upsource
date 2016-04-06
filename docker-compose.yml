@@ -7,6 +7,7 @@ upsource:
         - 80:8080
     volumes:
         - /etc/localtime:/etc/localtime:ro
+        - /etc/timezone:/etc/timezone:ro
         - /data/upsource:/var/lib/upsource
         - /data/upsource/conf:/opt/upsource/conf
     ulimits:
