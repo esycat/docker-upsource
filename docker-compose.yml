@@ -1,16 +1,20 @@
-upsource:
-    # build: .
-    image: esycat/upsource
-    container_name: upsource
-    restart: always
-    ports:
-        - 80:8080
-    volumes:
-        - /etc/localtime:/etc/localtime:ro
-        - /etc/timezone:/etc/timezone:ro
-        - /data/upsource:/var/lib/upsource
-        - /data/upsource/conf:/opt/upsource/conf
-    ulimits:
-        memlock: -1
-        nofile: 100000
-        nproc: 32768
+version: '2'
+
+services:
+    upsource:
+        build:
+            context: .
+        image: esycat/upsource
+        container_name: upsource
+        restart: always
+        ports:
+            - 80:8080
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - /etc/timezone:/etc/timezone:ro
+            - /data/upsource:/var/lib/upsource
+            - /data/upsource/conf:/opt/upsource/conf
+        ulimits:
+            memlock: -1
+            nofile: 100000
+            nproc: 32768
