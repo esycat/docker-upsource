@@ -2,13 +2,12 @@ version: '2'
 
 services:
     upsource:
-        build:
-            context: .
+        build: .
         image: esycat/upsource
         container_name: upsource
         restart: always
         ports:
-            - 80:8080
+            - 8083:8080
         volumes:
             - /etc/localtime:/etc/localtime:ro
             - /etc/timezone:/etc/timezone:ro

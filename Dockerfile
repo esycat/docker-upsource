@@ -1,37 +1,46 @@
-FROM esycat/java:oracle-8
+FROM esycat/java:alpine-openjre
 
 MAINTAINER "Eugene Janusov" <esycat@gmail.com>
 
-ENV APP_VERSION 3.5
-ENV APP_BUILD 3550
-ENV APP_PORT 8080
-ENV APP_USER upsource
-ENV APP_SUFFIX upsource
+ARG APP_VERSION=3.5
+ARG APP_BUILD=3550
 
-ENV APP_DISTNAME upsource-${APP_VERSION}.${APP_BUILD}
-ENV APP_DISTFILE ${APP_DISTNAME}.zip
-ENV APP_PREFIX /opt
-ENV APP_DIR $APP_PREFIX/$APP_SUFFIX
-ENV APP_HOME /var/lib/$APP_SUFFIX
+LABEL \
+    version="${APP_VERSION}.${APP_BUILD}" \
+    com.esyfur.jetbrains-hub-version="${APP_VERSION}.${APP_BUILD}" \
+    com.esyfur.vcs-url="https://github.com/esycat/docker-upsource"
+
+ENV APP_NAME=upsource \
+    APP_PORT=8080 \
+    APP_UID=500 \
+    APP_PREFIX=/opt
+
+ENV APP_USER=$APP_NAME \
+    APP_DIR=$APP_PREFIX/$APP_NAME \
+    APP_HOME=/var/lib/$APP_NAME
 
 # preparing home (data) directory and user+group
-RUN mkdir $APP_HOME
-RUN groupadd -r $APP_USER
-RUN useradd -r -g $APP_USER -d $APP_HOME $APP_USER
-RUN chown -R $APP_USER:$APP_USER $APP_HOME
+RUN useradd --system --user-group --uid $APP_UID --home $APP_HOME $APP_USER && \
+    mkdir $APP_HOME && \
+    chown -R $APP_USER:$APP_USER $APP_HOME
 
-# downloading and unpacking the distribution, removing bundled JVMs
 WORKDIR $APP_PREFIX
-RUN wget -q https://download.jetbrains.com/upsource/$APP_DISTFILE && \
-    unzip -q $APP_DISTFILE && \
-    mv $APP_DISTNAME $APP_SUFFIX && \
+
+# downloading build dependencies,
+# downloading and unpacking the distribution, changing file permissions, removing bundled JVMs,
+# removing build dependencies
+RUN apk add -q --no-cache --virtual .build-deps wget unzip && \
+    wget -qO ${APP_NAME}.zip https://download.jetbrains.com/upsource/upsource-${APP_VERSION}.${APP_BUILD}.zip && \
+    unzip -q ${APP_NAME}.zip -x */internal/java/* && \
+    mv upsource-${APP_VERSION}.${APP_BUILD} $APP_NAME && \
     chown -R $APP_USER:$APP_USER $APP_DIR && \
-    rm -rf $APP_DIR/internal/java && \
-    rm $APP_DISTFILE
+    rm ${APP_NAME}.zip && \
+    apk del .build-deps
 
 USER $APP_USER
 WORKDIR $APP_DIR
 
+# configuring the application
 RUN bin/upsource.sh configure \
     --backups-dir $APP_HOME/backups \
     --data-dir    $APP_HOME/data \
@@ -40,7 +49,7 @@ RUN bin/upsource.sh configure \
     --listen-port $APP_PORT \
     --base-url    http://localhost/
 
-ENTRYPOINT ["bin/upsource.sh"]
-CMD ["run"]
 EXPOSE $APP_PORT
 VOLUME ["$APP_HOME"]
+ENTRYPOINT ["bin/upsource.sh"]
+CMD ["run"]
