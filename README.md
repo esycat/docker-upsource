@@ -7,7 +7,7 @@ The image has been reworked to use Alpine instead of Ubuntu. As a consequence, t
 
 [Upsource](https://jetbrains.com/upsource/) is a repository browsing and code review tool from [JetBrains](https://jetbrains.com/).
 
-Version `2017.1`, build `1892` (released April 20, 2017).
+Version `2017.1`, build `1922` (released May 16, 2017).
 
 The image is based on [Alpine 3.4 with OpenJDK JRE 8](https://hub.docker.com/r/esycat/java/).
 
