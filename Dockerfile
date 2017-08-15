@@ -3,7 +3,7 @@ FROM esycat/java:alpine-oraclejdk8
 MAINTAINER "Eugene Janusov" <esycat@gmail.com>
 
 ARG APP_VERSION=2017.2
-ARG APP_BUILD=2057
+ARG APP_BUILD=2197
 
 LABEL \
     version="${APP_VERSION}.${APP_BUILD}" \
